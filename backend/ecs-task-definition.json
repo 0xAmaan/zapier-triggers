@@ -1,0 +1,47 @@
+{
+  "family": "zapier-triggers-backend",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::971422717446:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "zapier-triggers-backend",
+      "image": "971422717446.dkr.ecr.us-west-1.amazonaws.com/zapier-triggers-backend:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8000,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "DATABASE_URL",
+          "value": "postgresql://zapier_user:YOUR_PASSWORD_HERE@zapier-triggers-db.c1ggqgo20hc4.us-west-1.rds.amazonaws.com:5432/zapier_triggers"
+        },
+        {
+          "name": "API_HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "name": "API_PORT",
+          "value": "8000"
+        },
+        {
+          "name": "CORS_ORIGINS",
+          "value": "http://localhost:3000,https://*.amplifyapp.com"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/zapier-triggers-backend",
+          "awslogs-region": "us-west-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

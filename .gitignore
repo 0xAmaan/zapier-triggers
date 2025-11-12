@@ -27,6 +27,9 @@ dist/
 .env.local
 .env*.local
 
+# AWS credentials (keep local only)
+backend/ecs-task-definition.local.json
+
 # Logs
 *.log
 npm-debug.log*

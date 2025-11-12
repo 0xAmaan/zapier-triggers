@@ -3,6 +3,8 @@
 import { Card } from "../../components/ui/card";
 import { Code, BookOpen, Zap } from "lucide-react";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
 export default function DocsPage() {
   return (
     <div className="p-8 max-w-5xl mx-auto">
@@ -27,7 +29,7 @@ export default function DocsPage() {
         </p>
         <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
           <p className="text-sm text-orange-800">
-            <strong>Base URL:</strong> <code className="bg-orange-100 px-2 py-1 rounded">http://localhost:8000</code>
+            <strong>Base URL:</strong> <code className="bg-orange-100 px-2 py-1 rounded">{API_BASE_URL}</code>
           </p>
         </div>
       </Card>
@@ -256,7 +258,7 @@ export default function DocsPage() {
             <h4 className="text-sm font-semibold text-gray-900 mb-2">Using cURL</h4>
             <div className="bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto">
               <pre className="text-sm font-mono">{`# Send an event
-curl -X POST http://localhost:8000/api/v1/events \\
+curl -X POST ${API_BASE_URL}/api/v1/events \\
   -H "Content-Type: application/json" \\
   -d '{
     "source": "stripe",
@@ -265,10 +267,10 @@ curl -X POST http://localhost:8000/api/v1/events \\
   }'
 
 # Get pending events
-curl http://localhost:8000/api/v1/inbox?status=pending
+curl ${API_BASE_URL}/api/v1/inbox?status=pending
 
 # Acknowledge an event
-curl -X DELETE http://localhost:8000/api/v1/events/evt_abc123`}</pre>
+curl -X DELETE ${API_BASE_URL}/api/v1/events/evt_abc123`}</pre>
             </div>
           </div>
 
@@ -276,7 +278,7 @@ curl -X DELETE http://localhost:8000/api/v1/events/evt_abc123`}</pre>
             <h4 className="text-sm font-semibold text-gray-900 mb-2">Using JavaScript</h4>
             <div className="bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto">
               <pre className="text-sm font-mono">{`// Send an event
-const response = await fetch('http://localhost:8000/api/v1/events', {
+const response = await fetch('${API_BASE_URL}/api/v1/events', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({

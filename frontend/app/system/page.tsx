@@ -14,6 +14,8 @@ import {
 import { api } from "../../lib/api";
 import type { Event } from "../../types/api";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
 type TabType = "database" | "flow" | "inspector";
 
 export default function SystemPage() {
@@ -313,7 +315,7 @@ export default function SystemPage() {
                 1. Create Event (POST)
               </h3>
               <div className="bg-gray-900 text-gray-100 rounded-lg p-4 font-mono text-xs overflow-x-auto">
-                <pre>{`POST http://localhost:8000/api/v1/events
+                <pre>{`POST ${API_BASE_URL}/api/v1/events
 Content-Type: application/json
 
 {
@@ -340,7 +342,7 @@ Response (201):
                 2. Get Inbox (GET)
               </h3>
               <div className="bg-gray-900 text-gray-100 rounded-lg p-4 font-mono text-xs overflow-x-auto">
-                <pre>{`GET http://localhost:8000/api/v1/inbox?status=pending&limit=50
+                <pre>{`GET ${API_BASE_URL}/api/v1/inbox?status=pending&limit=50
 
 Response (200):
 {
@@ -364,7 +366,7 @@ Response (200):
                 3. Acknowledge Event (DELETE)
               </h3>
               <div className="bg-gray-900 text-gray-100 rounded-lg p-4 font-mono text-xs overflow-x-auto">
-                <pre>{`DELETE http://localhost:8000/api/v1/events/evt_12345
+                <pre>{`DELETE ${API_BASE_URL}/api/v1/events/evt_12345
 
 Response (200):
 {
