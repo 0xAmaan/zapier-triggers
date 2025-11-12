@@ -164,7 +164,7 @@ def main():
             print("[WARN] API returned unexpected status\n")
     except Exception:
         print("[ERROR] Cannot connect to API. Make sure it's running!\n")
-        print("        Start the API with: uv run uvicorn app.main:app --reload\n")
+        print("        Start the API with: cd backend && uv run uvicorn app.main:app --reload\n")
         sys.exit(1)
 
     event_count = 0
