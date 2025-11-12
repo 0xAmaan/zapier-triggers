@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { MainLayout } from "../components/layout/MainLayout";
+import { ErrorBoundary } from "../components/ErrorBoundary";
 
 export const metadata: Metadata = {
   title: "Zapier Triggers",
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <MainLayout>{children}</MainLayout>
+        <ErrorBoundary>
+          <MainLayout>{children}</MainLayout>
+        </ErrorBoundary>
       </body>
     </html>
   );

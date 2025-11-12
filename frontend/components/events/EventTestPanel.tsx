@@ -27,31 +27,23 @@ export const EventTestPanel = ({ onEventSent }: EventTestPanelProps) => {
   const [error, setError] = useState<string | null>(null);
 
   const handleSend = async () => {
-    console.log("[EventTestPanel] Starting send...");
     setIsSending(true);
     setError(null);
 
     try {
-      console.log("[EventTestPanel] Creating event...");
-      const response = await api.createEvent({
+      await api.createEvent({
         source: selectedTemplate.source,
         event_type: selectedTemplate.event_type,
         payload: selectedTemplate.payload,
       });
-      console.log("[EventTestPanel] Event created:", response);
 
       // Wait a brief moment for backend to process, then refresh
-      console.log("[EventTestPanel] Waiting 100ms for backend...");
       await new Promise(resolve => setTimeout(resolve, 100));
-
-      console.log("[EventTestPanel] Calling onEventSent callback...");
       await onEventSent?.();
-      console.log("[EventTestPanel] onEventSent callback completed");
     } catch (err) {
-      console.error("[EventTestPanel] Error:", err);
+      console.error("Failed to send event:", err);
       setError(err instanceof Error ? err.message : "Failed to send event");
     } finally {
-      console.log("[EventTestPanel] Send complete");
       setIsSending(false);
     }
   };

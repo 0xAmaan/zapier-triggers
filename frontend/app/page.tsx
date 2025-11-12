@@ -11,15 +11,12 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchEvents = async () => {
-    console.log("[Home] Fetching events...");
     try {
       // Fetch ALL events (both pending and acknowledged) by making two calls
       const [pendingResponse, acknowledgedResponse] = await Promise.all([
         api.getInbox({ status: "pending", limit: 100 }),
         api.getInbox({ status: "acknowledged", limit: 100 }),
       ]);
-
-      console.log("[Home] Fetched pending:", pendingResponse.events.length, "acknowledged:", acknowledgedResponse.events.length);
 
       // Combine and sort by created_at (newest first)
       const allEvents = [
@@ -30,7 +27,6 @@ export default function Home() {
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
 
-      console.log("[Home] Setting events state, total:", allEvents.length);
       setEvents(allEvents);
     } catch (error) {
       console.error("Failed to fetch events:", error);
@@ -99,11 +95,7 @@ export default function Home() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left Column - Test Panel */}
         <div>
-          <EventTestPanel onEventSent={async () => {
-            console.log("[Home] Event sent callback triggered");
-            await fetchEvents();
-            console.log("[Home] Event sent callback completed");
-          }} />
+          <EventTestPanel onEventSent={fetchEvents} />
         </div>
 
         {/* Right Column - Activity Feed */}
