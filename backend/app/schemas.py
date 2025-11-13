@@ -1,6 +1,7 @@
-from pydantic import BaseModel, ConfigDict, field_validator
 from datetime import datetime
-from typing import Optional, Dict, Any
+from typing import Any, Dict, Optional
+
+from pydantic import BaseModel, ConfigDict, field_validator
 
 
 class EventCreate(BaseModel):
@@ -10,18 +11,18 @@ class EventCreate(BaseModel):
     event_type: str
     payload: Dict[str, Any]
 
-    @field_validator('source')
+    @field_validator("source")
     @classmethod
     def source_not_empty(cls, v: str) -> str:
         if not v or not v.strip():
-            raise ValueError('source cannot be empty')
+            raise ValueError("source cannot be empty")
         return v.lower()
 
-    @field_validator('event_type')
+    @field_validator("event_type")
     @classmethod
     def event_type_not_empty(cls, v: str) -> str:
         if not v or not v.strip():
-            raise ValueError('event_type cannot be empty')
+            raise ValueError("event_type cannot be empty")
         return v.lower()
 
 
