@@ -1,7 +1,9 @@
-from sqlalchemy import Column, String, DateTime, JSON
-from sqlalchemy.sql import func
-from app.database import Base
 import uuid
+
+from sqlalchemy import JSON, Column, DateTime, String
+from sqlalchemy.sql import func
+
+from app.database import Base
 
 
 class Event(Base):
@@ -10,9 +12,7 @@ class Event(Base):
     __tablename__ = "events"
 
     id = Column(
-        String,
-        primary_key=True,
-        default=lambda: f"evt_{uuid.uuid4().hex[:12]}"
+        String, primary_key=True, default=lambda: f"evt_{uuid.uuid4().hex[:12]}"
     )
     source = Column(String, index=True, nullable=False)
     event_type = Column(String, index=True, nullable=False)

@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import events
-from app.database import engine
+
 from app import models
+from app.database import engine
+from app.routers import events
 
 # Create database tables
 models.Base.metadata.create_all(bind=engine)
@@ -51,14 +52,11 @@ def root():
         "version": "0.1.0",
         "status": "operational",
         "docs": "/docs",
-        "redoc": "/redoc"
+        "redoc": "/redoc",
     }
 
 
 @app.get("/health", tags=["health"])
 def health_check():
     """Health check endpoint for monitoring"""
-    return {
-        "status": "healthy",
-        "service": "zapier-triggers-api"
-    }
+    return {"status": "healthy", "service": "zapier-triggers-api"}
